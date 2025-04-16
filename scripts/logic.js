@@ -1,16 +1,19 @@
 //Question 1//
 
 console.log("Student Reports");
+// O(n*m) ==> being that for each n (being number of students) the function traverses m(being number of scores)
 function generateReport(students) {
   let report = [];
-
+  // O(n) ==> n being the number of students entered
   for (let i = 0; i < students.length; i++) {
+    // O(m) ==> m being the number of scores entered for each student
     let total = students[i].scores.reduce(function (sum, score) {
       return sum + score;
     }, 0);
 
     let average = total / students[i].scores.length;
 
+    // O(1) ==> since it does not rely on client input
     let grade;
 
     if (average >= 90) {
@@ -47,8 +50,11 @@ console.log("<=============================>");
 //Question 2//
 
 console.log("Bank Account System");
-
+/* O(1) + O(1) + O(1) + O(1) + O(1) + O(1) + O(1) + O(n) = O(n),
+O(n) ==> being the number of lig histories 
+*/
 class BankAccount {
+  // O(1) — Constructor only assigns initial values (name, balance, and history with 1 entry)
   constructor(ownerName, initialBalance) {
     this.name = ownerName;
     this.balance = initialBalance;
@@ -56,7 +62,7 @@ class BankAccount {
       `Account was created for ${ownerName} with the following amount \$${initialBalance}.`,
     ];
   }
-
+  // O(1) — Deposit adds to balance and pushes 1 history message
   deposit(amount) {
     if (amount > 0) {
       this.balance += amount;
@@ -65,7 +71,7 @@ class BankAccount {
       this.history.push(`Deposite attempt of \$${amount} failed. `);
     }
   }
-
+  // O(1) — Withdraw subtracts from balance and logs the action
   withdraw(amount) {
     if (amount > 0 && amount <= this.balance) {
       this.balance -= amount;
@@ -76,24 +82,25 @@ class BankAccount {
   }
 
   transfer(anotherAccount, amount) {
+    // O(1) — Checking if the account is null or undefined
     if (anotherAccount === undefined || anotherAccount === null) {
       this.history.push(
         `Failed transfer: ${anotherAccount.name} has no account available.`
       );
       return;
     }
-
+    // O(1) — Type validation checks (all are simple comparisons)
     const hasBalance = typeof anotherAccount.balance === "number";
     const hasOwnerName = typeof anotherAccount.name === "string";
     const hasHistory = Array.isArray(anotherAccount.history);
-
+    // O(1) — Just logs and returns if validation fails
     if (!hasBalance || !hasOwnerName || !hasHistory) {
       this.history.push(
         `Failed transfer: ${anotherAccount.name} account is not valid.`
       );
       return;
     }
-
+    // O(1) — Transfers money and logs to both accounts
     if (amount > 0 && amount <= this.balance) {
       this.balance -= amount;
       anotherAccount.balance += amount;
@@ -107,11 +114,11 @@ class BankAccount {
       );
     }
   }
-
+  // O(1) — Only returns a string based on 2 variables
   getSummary() {
     return `${this.name}'s balance is \$${this.balance}`;
   }
-
+  // O(n) ==> n being the number of transactions in the history array
   printHistory() {
     console.log(`${this.name}'s Transaction History:`);
     this.history.forEach(function (entry) {
