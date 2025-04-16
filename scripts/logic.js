@@ -1,3 +1,53 @@
+//Question 1//
+
+console.log("Student Reports");
+function generateReport(students) {
+  let report = [];
+
+  for (let i = 0; i < students.length; i++) {
+    let total = students[i].scores.reduce(function (sum, score) {
+      return sum + score;
+    }, 0);
+
+    let average = total / students[i].scores.length;
+
+    let grade;
+
+    if (average >= 90) {
+      grade = "A";
+    } else if (average >= 80) {
+      grade = "B";
+    } else if (average >= 70) {
+      grade = "C";
+    } else if (average >= 60) {
+      grade = "D";
+    } else {
+      grade = "F";
+    }
+
+    report.push({
+      name: students[i].name,
+      average: average,
+      grade: grade,
+    });
+  }
+
+  return report;
+}
+
+const students = [
+  { name: "Alice", scores: [90, 85, 92] },
+  { name: "Bob", scores: [70, 68, 72] },
+  { name: "Charlie", scores: [100, 100, 100] },
+];
+
+console.log(generateReport(students));
+
+console.log("<=============================>");
+//Question 2//
+
+console.log("Bank Account System");
+
 class BankAccount {
   constructor(ownerName, initialBalance) {
     this.name = ownerName;
@@ -80,8 +130,34 @@ acc1.withdraw(150);
 
 console.log(acc1.getSummary()); // John's balance is $300
 console.log(acc2.getSummary()); // Sara's balance is $500
-console.log("============")
+console.log("============");
 acc1.printHistory();
 
-console.log("============")
+console.log("============");
 acc2.printHistory();
+
+console.log("<=============================>");
+
+// Question 3 //
+
+console.log("Adding functionality to Website.");
+
+const input = document.getElementById("taskInput");
+const addButton = document.getElementById("addBtn");
+const taskList = document.getElementById("taskList");
+
+addButton.addEventListener("click", function () {
+  const taskText = input.value.trim();
+
+  if (taskText !== "") {
+    const li = document.createElement("li");
+    li.textContent = taskText;
+
+    taskList.appendChild(li);
+    input.value = "";
+
+    li.addEventListener("click", function () {
+      li.classList.toggle("completed");
+    });
+  }
+});
